@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :articles
   resources :comments
   root :to => "welcome#index"
-
+  get 'welcome/about' => 'welcome#about'
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
