@@ -44,6 +44,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 #信件測試套件
 gem 'mailcatcher'
 
+# 做假資料的套件
+gem 'faker'
+gem 'populator'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

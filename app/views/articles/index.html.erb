@@ -1,0 +1,22 @@
+<% @articles.each do |a| %>
+  <div class="panel panel-default devise-bs">
+    <div class="panel-heading">
+      <h4><%= a.title %></h4>
+    </div>
+    <div class="panel-body">
+          <div class="form-group">
+            <h5><%= a.article_type.article_type%></h5>
+          </div>
+          <div class="form-group">
+            <h5><%= a.content%></h5>
+          </div>
+          <div class="form-group">
+            <h5><%= a.updated_at%></h5>
+          </div>
+          <div class="form-group">
+            <%= link_to '修改資料' ,edit_article_path(a) %>
+          </div>
+
+    </div>
+  </div>
+<% end %>

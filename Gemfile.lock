@@ -70,6 +70,8 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.9.1)
     execjs (2.6.0)
+    faker (1.6.3)
+      i18n (~> 0.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -107,6 +109,7 @@ GEM
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
     pg (0.18.4)
+    populator (1.0.0)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     rack (1.6.4)
@@ -206,12 +209,14 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise
   devise-bootstrap-views
+  faker
   jbuilder (~> 2.0)
   jquery-rails
   kaminari
   mailcatcher
   momentjs-rails (>= 2.9.0)
   pg
+  populator
   pundit
   rails (= 4.2.5.2)
   rails_12factor
