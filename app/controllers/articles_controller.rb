@@ -1,34 +1,58 @@
 class ArticlesController < ApplicationController
+  before_action :authenticate_user!
   before_action :article_params , :only =>[:create , :update]
-  before_action :article_edit_params , :only =>[:edit ,:update]
+  before_action :article_id_params , :only =>[:edit ,:update ,:show]
+  before_action :set_article, :only => [:show, :edit, :update]
 
   def index
-    @articles = Article.includes(:article_type)
+    # @articles = Article.select('count(commnets.article_id) AS comments_count').joins(:comments).group('comments.article_id').order('comments_count')
+    @articles = Article.select('articles.*,count(comments.article_id) as comments_count').joins(:comments).group('comments.article_id').order('comments_count')
   end
   def new
     @articles = Article.new
     @all_article_type_collection = ArticleType.all
   end
   def create
-    new_article = Article.create(article_params)
-    flash[:notice] = new_article
+    new_article = Article.new(article_params)
+    new_article.user_id = current_user.id
+    flash[:notice] = new_article.save
     redirect_to articles_path
   end
   def edit
-    @article = Article.find(article_edit_params['id'])
     @all_article_type_collection = ArticleType.all
+
+    if(@article.user_id != current_user.id)
+      flash[:notice] = "can't access"
+      redirect_to articles_path
+    end
 
   end
   def update
-    @article = Article.find(article_edit_params['id'])
-    @article.update(article_params)
-    redirect_to articles_path
+    if(@article.user_id != current_user.id)
+      flash[:notice] = "can't access"
+      redirect_to articles_path
+    else
+      @article.update(article_params)
+      redirect_to articles_path
+    end
   end
+
+  def show
+    @comment = Comment.new
+    @comment_list = @article.comments.order('updated_at DESC')
+  end
+
   private
+
+  def set_article
+    @article = Article.find(@article_id['id'])
+  end
+
   def article_params
     params.require(:article).permit(:title, :content, :article_type_id )
   end
-  def article_edit_params
+
+  def article_id_params
     @article_id = params.permit(:id)
   end
 end

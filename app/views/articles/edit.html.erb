@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
           <%= f.label :article_type_id %><br/>
-          <%= f.select :article_type_id , @all_article_type_collection.collect {|g| [g.article_type , g.id] } ,{ :selected => @article.id, include_blank: true },{class: "form-control"}%>
+          <%= f.select :article_type_id , @all_article_type_collection.collect {|g| [g.article_type , g.id] } ,{ :selected => @article.article_type_id, include_blank: true },{class: "form-control"}%>
         </div>
         <%= f.submit t('.sign_up', :default => "修改文章"), class: "btn btn-primary" %>
     <% end %>

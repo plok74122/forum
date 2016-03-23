@@ -1,0 +1,61 @@
+    <div class="panel panel-default devise-bs">
+      <div class="panel-heading">
+        <h4><%= @article.title %></h4>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <h5><%= @article.user.email%></h5>
+        </div>
+        <div class="form-group">
+          <h5><%= @article.article_type.article_type%></h5>
+        </div>
+        <div class="form-group">
+          <h5><%= @article.content%></h5>
+        </div>
+        <div class="form-group">
+          <h5><%= @article.updated_at%></h5>
+        </div>
+      </div>
+      <div class="panel-heading">
+        <h4>Comment！</h4>
+        <button class="btn" id="add_comment">新增評論</button>
+      </div>
+      <div class="container">
+        <% @comment_list.each do |comment| %>
+          <h4><%= comment.comment %></h4>
+            by <%= comment.user.email %>(<%= comment.updated_at %>) <br>
+        <% end %>
+      </div>
+    </div>
+    <div id="dialog" title="新增評論">
+      <%= form_for @comment ,  :url => { :controller => 'comments', :action => 'create' } , :method =>'POST'  do |f| %>
+      <%= f.hidden_field :article_id , value: @article.id %>
+      <div class="form-group">
+        <%= f.label :comment %><br/>
+        <%= f.text_field :comment , autofocus: true, class: "form-control" ,required: true%>
+      </div>
+      <div class="form-group">
+        <%= f.submit  "新增評論", class: "btn btn-success" %>
+      </div>
+      <% end %>
+    </div>
+    <script>
+      $(function() {
+        $( "#dialog" ).dialog({
+          autoOpen: false,
+          modal: true,
+          show: {
+            effect: "blind",
+            duration: 1000
+          },
+          hide: {
+            effect: "explode",
+            duration: 1000
+          }
+        });
+
+        $( "#add_comment" ).click(function() {
+          $( "#dialog" ).dialog( "open" );
+        });
+      });
+    </script>
