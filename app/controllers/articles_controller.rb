@@ -5,8 +5,7 @@ class ArticlesController < ApplicationController
   before_action :set_article, :only => [:show, :edit, :update]
 
   def index
-    # @articles = Article.select('count(commnets.article_id) AS comments_count').joins(:comments).group('comments.article_id').order('comments_count')
-    @articles = Article.select('articles.*,count(comments.article_id) as comments_count').joins(:comments).group('comments.article_id').order('comments_count')
+    @articles = Article.select('count(commnets.article_id) AS comments_count').joins(:comments).group('comments.article_id').order('comments_count')
   end
   def new
     @articles = Article.new
