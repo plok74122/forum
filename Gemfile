@@ -43,6 +43,9 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+#排序套件
+gem 'ransack'
+
 #信件測試套件
 gem 'mailcatcher'
 

@@ -1,2 +1,33 @@
 <h1>論壇首頁</h1>
-<%= link_to '新增文章' , newd_article_path  %>
+<p>
+  <%= link_to "New Topic", new_article_path, :class => "btn btn-primary" %>
+</p>
+
+<%= search_form_for @q do |f| %>
+    <%= f.label :title_cont %>
+    <%= f.search_field :title_cont %>
+    <%= f.submit "Search" %>
+<% end %>
+
+
+<p>
+  <%= sort_link(@q, :id) %>
+  <%= sort_link(@q, :updated_at, "最後更新時間") %>
+</p>
+
+<table class="table">
+  <% @articles.each do |p| %>
+      <tr>
+        <td><%= link_to p.title, articles_path(p) %></td>
+        <td><%= p.user.try(:email) %></td>
+        <td>
+          <% if current_user && ( p.user == current_user ) %>
+              <%= link_to "Edit", edit_article_path(p), :class => "btn btn-default btn-sm" %>
+              <%= link_to "Delete", article_path(p), :data => { :confirm => "r u sure?"}, :class => "btn btn-danger btn-sm", :method => :delete %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+</table>
+
+<%= paginate @articles %>
