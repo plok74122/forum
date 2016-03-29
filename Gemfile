@@ -24,6 +24,15 @@ gem "kaminari"
 gem 'devise'
 gem 'pundit'
 
+# omniauth
+gem 'omniauth-facebook'
+
+# http連線
+gem 'rest-client'
+
+# 上傳套件
+gem 'carrierwave'
+
 # devise view套件
 gem 'devise-bootstrap-views'
 
