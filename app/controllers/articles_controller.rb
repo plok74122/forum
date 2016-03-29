@@ -32,7 +32,13 @@ class ArticlesController < ApplicationController
       flash[:notice] = "can't access"
       redirect_to articles_path
     else
-      @article.update(article_params)
+      if(params[:_remove_image] == 1)
+        @article.image = nil
+      end
+      # byebug
+      if @article.update(article_params)
+        flash[:notice] = "update success"
+      end
       redirect_to articles_path
     end
   end
@@ -49,7 +55,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :content, :article_type_id )
+    params.require(:article).permit(:title, :content, :article_type_id ,:image ,:_remove_image)
   end
 
   def article_id_params

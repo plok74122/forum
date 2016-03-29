@@ -4,6 +4,13 @@
       </div>
       <div class="panel-body">
         <div class="form-group">
+        <% if @article.image.exists? %>
+          <%= image_tag(@article.image.url(:medium)) %>
+        <% else %>
+           NONE
+        <% end %>
+        </div>
+        <div class="form-group">
           <h5><%= @article.user.email%></h5>
         </div>
         <div class="form-group">

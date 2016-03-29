@@ -31,7 +31,7 @@ gem 'omniauth-facebook'
 gem 'rest-client'
 
 # 上傳套件
-gem 'carrierwave'
+gem 'paperclip'
 
 # devise view套件
 gem 'devise-bootstrap-views'

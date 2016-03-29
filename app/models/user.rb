@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
       existing_user.fb_uid = auth.uid
       existing_user.fb_token = auth.credentials.token
       #existing_user.fb_raw_data = auth
-      user.confirmed_at = DateTime.now.to_date
+      # user.confirmed_at = DateTime.now.to_date
       existing_user.save!
       return existing_user
     end
