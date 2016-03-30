@@ -27,6 +27,10 @@ gem 'pundit'
 # omniauth
 gem 'omniauth-facebook'
 
+gem 'sinatra'
+gem 'omniauth-google-oauth2'
+
+
 # http連線
 gem 'rest-client'
 
