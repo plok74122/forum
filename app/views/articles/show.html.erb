@@ -27,12 +27,15 @@
         <h4>Comment！</h4>
         <button class="btn" id="add_comment">新增評論</button>
       </div>
-      <div class="container">
-        <% @comment_list.each do |comment| %>
+      <% @comment_list.each do |comment| %>
+      <div class="container" id="comment-<%= comment.id %>">
           <h4><%= comment.comment %></h4>
             by <%= comment.user.email %>(<%= comment.updated_at %>) <br>
-        <% end %>
+          <% if current_user.id == comment.user_id %>
+            <%= link_to "Delete" , comment_path(comment), remote: true ,:method => :delete %>
+          <% end %>
       </div>
+      <% end %>
     </div>
     <div id="dialog" title="新增評論">
       <%= form_for @comment ,  :url => { :controller => 'comments', :action => 'create' } , :method =>'POST'  do |f| %>
