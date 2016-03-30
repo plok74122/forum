@@ -23,7 +23,16 @@ class WelcomeController < ApplicationController
     @articles = Article
     @comments = Comment
   end
+  def ajax
 
+  end
+
+  def ajax_show
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
   private
   # def set_all_article
   #   @articles = current_user.articless.find( params[:id])

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   resources :comments
   root :to => "welcome#index"
   get 'welcome/about' => 'welcome#about'
+  get 'welcome/ajax' => 'welcome#ajax'
+  get 'welcome/ajax_show' => 'welcome#ajax_show'
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
