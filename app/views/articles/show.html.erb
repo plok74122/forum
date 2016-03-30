@@ -1,71 +1,76 @@
-    <div class="panel panel-default devise-bs">
-      <div class="panel-heading">
-        <h4><%= @article.title %></h4>
-      </div>
-      <div class="panel-body">
-        <div class="form-group">
-        <% if @article.image.exists? %>
+<div class="panel panel-default devise-bs">
+  <div class="panel-heading">
+    <h4><%= @article.title %></h4>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
+      <% if @article.image.exists? %>
           <%= image_tag(@article.image.url(:medium)) %>
-        <% else %>
-           NONE
-        <% end %>
-        </div>
-        <div class="form-group">
-          <h5><%= @article.user.email%></h5>
-        </div>
-        <div class="form-group">
-          <h5><%= @article.article_type.article_type%></h5>
-        </div>
-        <div class="form-group">
-          <h5><%= @article.content%></h5>
-        </div>
-        <div class="form-group">
-          <h5><%= @article.updated_at%></h5>
-        </div>
-      </div>
-      <div class="panel-heading">
-        <h4>Comment！</h4>
-        <button class="btn" id="add_comment">新增評論</button>
-      </div>
-      <% @comment_list.each do |comment| %>
-      <div class="container" id="comment-<%= comment.id %>">
-          <h4><%= comment.comment %></h4>
-            by <%= comment.user.email %>(<%= comment.updated_at %>) <br>
-          <% if current_user.id == comment.user_id %>
-            <%= link_to "Delete" , comment_path(comment), remote: true ,:method => :delete %>
-          <% end %>
-      </div>
+      <% else %>
+          NONE
       <% end %>
     </div>
-    <div id="dialog" title="新增評論">
-      <%= form_for @comment ,  :url => { :controller => 'comments', :action => 'create' } , :method =>'POST'  do |f| %>
-      <%= f.hidden_field :article_id , value: @article.id %>
+    <div class="form-group" id="like-area">
+      <% like = @article.finy_like_by(current_user) %>
+      <%= render :partial => "like", :locals => { :like => like }  %>
+    </div>
+    <div class="form-group">
+      <h5><%= @article.user.email %></h5>
+    </div>
+
+    <div class="form-group">
+      <h5><%= @article.article_type.article_type %></h5>
+    </div>
+    <div class="form-group">
+      <h5><%= @article.content %></h5>
+    </div>
+    <div class="form-group">
+      <h5><%= @article.updated_at %></h5>
+    </div>
+  </div>
+  <div class="panel-heading">
+    <h4>Comment！</h4>
+    <button class="btn" id="add_comment">新增評論</button>
+  </div>
+  <% @comment_list.each do |comment| %>
+      <div class="container" id="comment-<%= comment.id %>">
+        <h4><%= comment.comment %></h4>
+        by <%= comment.user.email %>(<%= comment.updated_at %>) <br>
+        <% if current_user.id == comment.user_id %>
+            <%= link_to "Delete", comment_path(comment), remote: true, :method => :delete %>
+        <% end %>
+      </div>
+  <% end %>
+</div>
+<div id="dialog" title="新增評論">
+  <%= form_for @comment, :url => {:controller => 'comments', :action => 'create'}, :method => 'POST' do |f| %>
+      <%= f.hidden_field :article_id, value: @article.id %>
       <div class="form-group">
         <%= f.label :comment %><br/>
-        <%= f.text_field :comment , autofocus: true, class: "form-control" ,required: true%>
+        <%= f.text_field :comment, autofocus: true, class: "form-control", required: true %>
       </div>
       <div class="form-group">
-        <%= f.submit  "新增評論", class: "btn btn-success" %>
+        <%= f.submit "新增評論", class: "btn btn-success" %>
       </div>
-      <% end %>
-    </div>
-    <script>
-      $(function() {
-        $( "#dialog" ).dialog({
-          autoOpen: false,
-          modal: true,
-          show: {
-            effect: "blind",
-            duration: 1000
-          },
-          hide: {
-            effect: "explode",
-            duration: 1000
-          }
-        });
+  <% end %>
+</div>
+<script>
+  $(function () {
+    $("#dialog").dialog({
+      autoOpen: false,
+      modal: true,
+      show: {
+        effect: "blind",
+        duration: 1000
+      },
+      hide: {
+        effect: "explode",
+        duration: 1000
+      }
+    });
 
-        $( "#add_comment" ).click(function() {
-          $( "#dialog" ).dialog( "open" );
-        });
-      });
-    </script>
+    $("#add_comment").click(function () {
+      $("#dialog").dialog("open");
+    });
+  });
+</script>
