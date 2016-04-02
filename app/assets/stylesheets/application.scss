@@ -1,12 +1,12 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import 'bootstrap-datetimepicker';
+@import "bootstrap-datetimepicker";
+@import "jquery-ui/core";
+@import "jquery-ui/theme";
 
-/*
-*= require jquery-ui
-# SASS
-*= require devise_bootstrap_views
+@import "jquery-ui";
+//SASS
+//@import "devise_bootstrap_views";
 
-# LESS
-*= require devise_bootstrap_views_less
-*/
+//LESS
+//@import "devise_bootstrap_views_less";
