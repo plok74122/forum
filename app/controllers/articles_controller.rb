@@ -1,39 +1,51 @@
 class ArticlesController < ApplicationController
   before_action :authenticate_user!
-  before_action :article_params , :only =>[:create , :update]
-  before_action :article_id_params , :only =>[:edit ,:update ,:show]
+  before_action :article_params, :only => [:create, :update]
+  before_action :article_id_params, :only => [:edit, :update, :show]
   before_action :set_article, :only => [:show, :edit, :update]
 
   def index
     # @articles = Article.select('count(commnets.article_id) AS comments_count').joins(:comments).group('comments.article_id').order('comments_count')
     # @articles = Article.select('articles.*,count(comments.article_id) as comments_count').joins(:comments).group('comments.article_id').order('comments_count')
-    @articles=Article.order('id DESC').page( params[:page] )
+    @articles=Article.order('id DESC').page(params[:page])
   end
+
   def new
     @articles = Article.new
     @all_article_type_collection = ArticleType.all
   end
+
   def create
-    new_article = Article.new(article_params)
-    new_article.user_id = current_user.id
-    flash[:notice] = new_article.save
-    redirect_to articles_path
+    @articles = Article.new(article_params)
+    @articles.user_id = current_user.id
+    @articles.valid?
+    flash[:alert] = @articles.errors
+    if @articles.save
+      flash[:notice] = "Article Create Success"
+      redirect_to articles_path
+    else
+      flash[:notice] = "Article Create Fail"
+      @all_article_type_collection = ArticleType.all
+      render "new"
+    end
   end
+
   def edit
     @all_article_type_collection = ArticleType.all
 
-    if(@article.user_id != current_user.id)
+    if (@article.user_id != current_user.id)
       flash[:notice] = "can't access"
       redirect_to articles_path
     end
 
   end
+
   def update
-    if(@article.user_id != current_user.id)
+    if (@article.user_id != current_user.id)
       flash[:notice] = "can't access"
       redirect_to articles_path
     else
-      if(params[:_remove_image] == 1)
+      if (params[:_remove_image] == 1)
         @article.image = nil
       end
       # byebug
@@ -56,7 +68,7 @@ class ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :content, :article_type_id ,:image ,:_remove_image)
+    params.require(:article).permit(:title, :content, :article_type_id, :image, :_remove_image)
   end
 
   def article_id_params

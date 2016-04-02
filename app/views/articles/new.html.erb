@@ -3,18 +3,22 @@
     <h4>新增文章</h4>
   </div>
   <div class="panel-body">
-    <%= form_for @articles ,  :url => articles_path() , :method =>'post'  do |f| %>
+    <%= form_for @articles, :url => articles_path(), :method => 'post' do |f| %>
         <div class="form-group">
-          <%= f.label :title , '標題'%>
-          <%= f.text_field :title , autofocus: true, class: "form-control" %>
+          <%= f.label :title, '標題' %>
+          <%= f.text_field :title, autofocus: true, class: "form-control" %>
+          <%= alert.messages[:title][0] if flash[alert] %>
+          <%= alert ? alert.messages[:title][0] : '' %>
         </div>
         <div class="form-group">
-          <%= f.label :content ,'內容'%>
-          <%= f.text_area :content , autofocus: true, class: "form-control" %>
+          <%= f.label :content, '內容' %>
+          <%= f.text_area :content, autofocus: true, class: "form-control" %>
+          <%= alert ? alert.messages[:content][0] : '' %>
         </div>
         <div class="form-group">
           <%= f.label :article_type_id %><br/>
-          <%= f.select :article_type_id , @all_article_type_collection.collect {|g| [g.article_type , g.id] } ,{ :selected => '', include_blank: true },{class: "form-control"}%>
+          <%= f.select :article_type_id, @all_article_type_collection.collect { |g| [g.article_type, g.id] }, {:selected => @articles.article_type_id, include_blank: true}, {class: "form-control"} %>
+          <%= alert ? alert.messages[:article_type_id][0]: '' %>
         </div>
         <div class="form-group">
           <%= f.file_field :image %>
