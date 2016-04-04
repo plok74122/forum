@@ -61,6 +61,28 @@ class ArticlesController < ApplicationController
     @comment_list = @article.comments.order('updated_at DESC')
   end
 
+  def subscribe
+    @article = Article.find(params[:id])
+
+    subscription = @article.finy_subscription_by(current_user)
+    if subscription
+      # do nothing
+    else
+      @subscription = @article.subscriptions.create!(:user => current_user)
+    end
+
+    redirect_to :back
+  end
+
+  def unsubscribe
+    @article = Article.find(params[:id])
+
+    subscription = @article.finy_subscription_by(current_user)
+    subscription.destroy
+
+    redirect_to :back
+  end
+
   private
 
   def set_article

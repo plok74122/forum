@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
   resources :articles do
     resources :likes
+    member do
+      post :subscribe
+      post :unsubscribe
+    end
   end
   resources :comments
   root :to => "welcome#index"

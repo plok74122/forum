@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :likes
   has_many :like_articles, :through => :likes, :source => :article
+  has_many :subscriptions
+  has_many :subscription_articles, :through => :subscriptions , :source => :article
   def self.from_omniauth(auth)
     # Case 1: Find existing user by facebook uid
     user = User.find_by_fb_uid( auth.uid )
