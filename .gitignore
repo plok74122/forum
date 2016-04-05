@@ -17,5 +17,8 @@
 /tmp
 
 .idea/
-.byebug_history
 /public/system
+
+
+# Ignore Byebug command history file.
+.byebug_history
