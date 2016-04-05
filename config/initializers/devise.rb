@@ -264,5 +264,5 @@ Devise.setup do |config|
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   # 返回的時候跟他要求email跟name ==>socpe  info_fields
   config.omniauth :facebook, "1180766021947508", "cd92761e977c3b4177bb9f971a795f0b", :scope => 'public_profile,email', :info_fields => 'email,name'
-  config.omniauth :google_oauth2, "941887580518-1ccpdmob9h0lc5d2q9hpp1vptmvuf6lr.apps.googleusercontent.com", "01Yz6bMdesWGpnUtJUY3y_Hy", { }
+  config.omniauth :google_oauth2, "941887580518-1ccpdmob9h0lc5d2q9hpp1vptmvuf6lr.apps.googleusercontent.com", "01Yz6bMdesWGpnUtJUY3y_Hy",  skip_jwt: true
 end

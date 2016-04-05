@@ -1,19 +1,19 @@
-Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :google_oauth2, ENV["941887580518-1ccpdmob9h0lc5d2q9hpp1vptmvuf6lr.apps.googleusercontent.com"], ENV["01Yz6bMdesWGpnUtJUY3y_Hy"]
-end
-
+# Rails.application.config.middleware.use OmniAuth::Builder do
+#   provider :google_oauth2, ENV["941887580518-1ccpdmob9h0lc5d2q9hpp1vptmvuf6lr.apps.googleusercontent.com"], ENV["01Yz6bMdesWGpnUtJUY3y_Hy"]
+# end
+# OmniAuth.config.full_host = Rails.env.production? ? 'https://domain.com' : 'http://localhost:3000'
 
 # Google's OAuth2 docs. Make sure you are familiar with all the options
 # before attempting to configure this gem.
 # https://developers.google.com/accounts/docs/OAuth2Login
 
-Rails.application.config.middleware.use OmniAuth::Builder do
-  # Default usage, this will give you offline access and a refresh token
-  # using default scopes 'email' and 'profile'
-  #
-  provider :google_oauth2, ENV["941887580518-1ccpdmob9h0lc5d2q9hpp1vptmvuf6lr.apps.googleusercontent.com"], ENV["01Yz6bMdesWGpnUtJUY3y_Hy"], {
-      :scope => 'email,profile'
-  }
+# Rails.application.config.middleware.use OmniAuth::Builder do
+#   Default usage, this will give you offline access and a refresh token
+#   using default scopes 'email' and 'profile'
+
+  # provider :google_oauth2, "941887580518-1ccpdmob9h0lc5d2q9hpp1vptmvuf6lr.apps.googleusercontent.com", "01Yz6bMdesWGpnUtJUY3y_Hy", {
+  #     :scope => 'email,profile'
+  # }
 
   # Manual setup for offline access with a refresh token.
   #
@@ -47,4 +47,4 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   # provider :google_oauth2, ENV['GOOGLE_KEY'], ENV['GOOGLE_SECRET'], {
   #   :skip_image_info => false
   # }
-end
+# end
