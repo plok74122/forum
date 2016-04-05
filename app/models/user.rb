@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
       #existing_user.fb_raw_data = auth
       # user.confirmed_at = DateTime.now.to_date
       existing_user.save!
-      return existing_user
+      reauth.credentialscredentials.tokenturn existing_user
     end
 
     # Case 3: Create new password
@@ -45,12 +45,13 @@ class User < ActiveRecord::Base
   def self.from_google_omniauth(auth)
     # 可用參數
     # auth.uid
+    # auth.credentialscredentials.token
     # auth.extra.id_token
     # auth.extra.raw_info    picture name email local
     user = User.find_by_google_uid(auth.uid)
     # Case 1: Find existing user by google uid
     if user
-      user.google_token = auth.extra.id_token
+      user.google_token = auth.credentials.token
       user.save!
       return user
     end
@@ -59,7 +60,7 @@ class User < ActiveRecord::Base
     existing_user = User.find_by_email(auth.extra.raw_info.email)
     if existing_user
       existing_user.google_uid = auth.uid
-      existing_user.google_token = auth.extra.id_token
+      existing_user.google_token = auth.credentials.token
       #existing_user.fb_raw_data = auth
       # user.confirmed_at = DateTime.now.to_date
       existing_user.save!
@@ -69,7 +70,7 @@ class User < ActiveRecord::Base
     # Case 3: Create new password
     user = User.new
     user.google_uid = auth.uid
-    user.google_token = auth.extra.id_token
+    user.google_token = auth.credentials.token
     user.email = auth.extra.raw_info.email
     user.password = Devise.friendly_token[0, 20]
     #user.fb_raw_data = auth
