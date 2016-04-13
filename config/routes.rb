@@ -14,6 +14,9 @@ Rails.application.routes.draw do
       post :unsubscribe
     end
   end
+  scope :path => '/api/v1/', :module => "api_v1", :as => 'v1', :defaults => { :format => :json } do
+    resources :articles
+  end
   resources :comments
   root :to => "welcome#index"
   get 'welcome/about' => 'welcome#about'
