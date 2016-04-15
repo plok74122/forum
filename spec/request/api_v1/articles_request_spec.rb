@@ -5,17 +5,43 @@ RSpec.describe 'APIarticles', type: :request do
   before do
     @article = Article.create(:title => 'foo', :content => 'bar', :article_type_id => 1, :user_id => 1)
   end
+  describe "GET /api/v1/articles" do
+    it "should return Topics JSON" do
+      get "/api/v1/articles"
+
+      data = {
+          "meta" => {
+              "current_page" => 1,
+              "total_pages" => 1,
+              "per_page" => 25,
+              "next_url" => nil,
+              "previous_url" => nil},
+          "results" => [{
+                            "id" => @article.id,
+                            "title" => @article.title,
+                            "content" => @article.content,
+                            "user_id" => @article.user_id,
+                            "article_type_id" => @article.article_type_id,
+                            "created_at" => @article.created_at.as_json,
+                            "updated_at" => @article.updated_at.as_json
+                        }]
+      }
+      expect(response).to have_http_status(200)
+      expect(JSON.parse(response.body)).to eq(data)
+    end
+  end
 
   describe "GET /api/v1/articles/:id" do
     it "should return Article JSON" do
       get "/api/v1/articles/#{@article.id}"
       data = {
-          "id" => @article.id,
-          "title" => @article.title,
-          "content" => @article.content,
-          "user_id" => @article.user_id,
-          "created_at" => @article.created_at.as_json,
-          "updated_at" => @article.updated_at.as_json
+              "id" => @article.id,
+              "title" => @article.title,
+              "content" => @article.content,
+              "user_id" => @article.user_id,
+              "article_type_id" => @article.article_type_id,
+              "created_at" => @article.created_at.as_json,
+              "updated_at" => @article.updated_at.as_json
       }
       expect(response).to have_http_status(200)
       expect(JSON.parse(response.body)).to eq(data)
@@ -44,7 +70,7 @@ RSpec.describe 'APIarticles', type: :request do
       expect(response).to have_http_status(400)
     end
     it "should return status 200 and update patch params" do
-      patch "/api/v1/articles/#{@article.id}", :title => 'foo_update' , :content => 'bar_edit'
+      patch "/api/v1/articles/#{@article.id}", :title => 'foo_update', :content => 'bar_edit'
       @article.reload
 
       data = {

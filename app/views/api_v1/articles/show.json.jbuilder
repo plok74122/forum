@@ -1,0 +1,1 @@
+json.partial! 'article', arㄑticle: @article
