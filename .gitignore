@@ -19,3 +19,4 @@
 .idea/
 .byebug_history
 /public/system
+/config/facebook.yml

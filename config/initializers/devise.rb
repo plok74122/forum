@@ -263,5 +263,7 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   # 返回的時候跟他要求email跟name ==>socpe  info_fields
-  config.omniauth :facebook, "1180766021947508", "cd92761e977c3b4177bb9f971a795f0b", :scope => 'public_profile,email', :info_fields => 'email,name'
+  fb_config = Rails.application.config_for(:facebook)
+
+  config.omniauth :facebook, fb_config['app_id'], fb_config['secret'], :scope => 'public_profile,email', :info_fields => 'email,name'
 end
