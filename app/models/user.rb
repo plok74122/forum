@@ -11,6 +11,16 @@ class User < ActiveRecord::Base
   has_many :like_articles, :through => :likes, :source => :article
   has_many :subscriptions
   has_many :subscription_articles, :through => :subscriptions , :source => :article
+
+
+  before_create :generate_authentication_token
+
+  def generate_authentication_token
+    # self.authentication_token = SecureRandom.hex(16)
+    self.authentication_token = Devise.friendly_token
+  end
+
+
   def self.from_omniauth(auth)
     # Case 1: Find existing user by facebook uid
     user = User.find_by_fb_uid( auth.uid )

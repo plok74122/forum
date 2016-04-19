@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   get 'articles/Property'
 
   # devise_for :users
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks"}
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   resources :articles do
@@ -14,8 +14,10 @@ Rails.application.routes.draw do
       post :unsubscribe
     end
   end
-  scope :path => '/api/v1/', :module => "api_v1", :as => 'v1', :defaults => { :format => :json } do
+  scope :path => '/api/v1/', :module => "api_v1", :as => 'v1', :defaults => {:format => :json} do
     resources :articles
+    post "/login" => "auth#login"
+    post "/logout" => "auth#logout"
   end
   resources :comments
   root :to => "welcome#index"
